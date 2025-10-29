@@ -24,6 +24,7 @@ export async function insertFile({ name, size, folder_id }) {
     const query = `
     INSERT INTO files(name, size, folder_id)
     VALUES($1, $2, $3)
+    RETURNING *;
     `;
     const values = [name, size, folder_id];
     console.log("Inserting: ", name, size, folder_id);
