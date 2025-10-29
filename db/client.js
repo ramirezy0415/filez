@@ -34,3 +34,17 @@ export async function insertFile({ name, size, folder_id }) {
     throw error;
   }
 }
+
+export async function getFiles() {
+  try {
+    const query = `
+    SELECT fi.*, fo.name AS folder_name FROM files AS fi
+    LEFT JOIN folders AS fo
+    ON fi.folder_id = fo.id;
+    `;
+    const { rows: files } = await db.query(query);
+    return files;
+  } catch (error) {
+    console.error(error);
+  }
+}
