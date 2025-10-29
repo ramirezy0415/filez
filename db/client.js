@@ -48,3 +48,15 @@ export async function getFiles() {
     console.error(error);
   }
 }
+
+export async function getFolders() {
+  try {
+    const query = `
+      SELECT * FROM folders;
+    `;
+    const { rows: folders } = await db.query(query);
+    return folders;
+  } catch (error) {
+    console.error(error);
+  }
+}
