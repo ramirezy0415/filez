@@ -60,3 +60,25 @@ export async function getFolders() {
     console.error(error);
   }
 }
+
+export async function getFolderById(id) {
+  try {
+    const query = `
+      SELECT *,
+      (
+        SELECT json_agg(files)
+        FROM files
+        WHERE files.folder_id = folders.id
+      ) AS file_list
+      FROM folders
+      WHERE id = $1;
+    `;
+    const values = [id];
+    const {
+      rows: [folder],
+    } = await db.query(query, values);
+    return folder;
+  } catch (error) {
+    console.error(error);
+  }
+}
